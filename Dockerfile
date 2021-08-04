@@ -3,7 +3,7 @@ FROM php:7.4-apache
 
 # Build Environment Variables
 ENV VERSION 3.5.2
-ENV URL https://github.com/phpservermon/phpservermon/archive/v${VERSION}.tar.gz 
+ENV URL https://github.com/phpservermon/phpservermon/archive/v${VERSION}.tar.gz
 
 # Install Base
 RUN apt-get update
@@ -58,11 +58,11 @@ RUN set -ex; \
   cd /tmp; \
   rm -rf ${APACHE_DOCUMENT_ROOT}/*; \
   curl --output phpservermonitor.tar.gz --location $URL; \
-  tar -xvf phpservermonitor.tar.gz --strip-components=1 -C ${APACHE_DOCUMENT_ROOT}/; \ 
+  tar -xvf phpservermonitor.tar.gz --strip-components=1 -C ${APACHE_DOCUMENT_ROOT}/; \
   cd ${APACHE_DOCUMENT_ROOT}
 #   chown -R ${APACHE_RUN_USER}:www-data /var/www
 #   find /var/www -type d -exec chmod 750 {} \; ; \
-#   find /var/www -type f -exec chmod 640 {} \; 
+#   find /var/www -type f -exec chmod 640 {} \;
 
 # Configuration
 # VOLUME ${APACHE_DOCUMENT_ROOT}/config.php

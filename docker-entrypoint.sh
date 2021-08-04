@@ -4,7 +4,7 @@ set -e
 # Setup Database Connection
 if [ ${PSM_AUTO_CONFIGURE} = true ]; then
 
-# Setup / Create 
+# Setup / Create
 echo "Auto Configure / Create config.php"
 touch ${APACHE_DOCUMENT_ROOT}/config.php; \
 chmod 0777 ${APACHE_DOCUMENT_ROOT}/config.php

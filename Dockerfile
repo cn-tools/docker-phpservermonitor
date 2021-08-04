@@ -77,5 +77,7 @@ COPY docker-entrypoint.sh /usr/local/bin/
 COPY maria-wait.sh /usr/local/bin/
 
 RUN chmod u+rwx /usr/local/bin/docker-entrypoint.sh
+RUN chmod u+rwx /usr/local/bin/maria-wait.sh
+
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["apache2-foreground"]

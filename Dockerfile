@@ -3,7 +3,7 @@ FROM php:7.4-apache
 
 # Build Environment Variables
 ENV VERSION 3.5.2
-ENV URL https://github.com/phpservermon/phpservermon/archive/v${VERSION}.tar.gz 
+ENV URL https://github.com/phpservermon/phpservermon/archive/v${VERSION}.tar.gz
 
 # Install Base
 RUN apt-get update
@@ -30,6 +30,7 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 ENV PSM_REFRESH_RATE_SECONDS 90
 ENV PSM_AUTO_CONFIGURE true
 ENV PSM_PHP_DEBUG false
+ENV PSM_BASE_URL false
 ENV MYSQL_HOST database
 ENV MYSQL_USER phpservermonitor
 ENV MYSQL_PASSWORD YOUR_PASSWORD
@@ -57,11 +58,11 @@ RUN set -ex; \
   cd /tmp; \
   rm -rf ${APACHE_DOCUMENT_ROOT}/*; \
   curl --output phpservermonitor.tar.gz --location $URL; \
-  tar -xvf phpservermonitor.tar.gz --strip-components=1 -C ${APACHE_DOCUMENT_ROOT}/; \ 
+  tar -xvf phpservermonitor.tar.gz --strip-components=1 -C ${APACHE_DOCUMENT_ROOT}/; \
   cd ${APACHE_DOCUMENT_ROOT}
 #   chown -R ${APACHE_RUN_USER}:www-data /var/www
 #   find /var/www -type d -exec chmod 750 {} \; ; \
-#   find /var/www -type f -exec chmod 640 {} \; 
+#   find /var/www -type f -exec chmod 640 {} \;
 
 # Configuration
 # VOLUME ${APACHE_DOCUMENT_ROOT}/config.php
@@ -76,5 +77,7 @@ COPY docker-entrypoint.sh /usr/local/bin/
 COPY maria-wait.sh /usr/local/bin/
 
 RUN chmod u+rwx /usr/local/bin/docker-entrypoint.sh
+RUN chmod u+rwx /usr/local/bin/maria-wait.sh
+
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["apache2-foreground"]

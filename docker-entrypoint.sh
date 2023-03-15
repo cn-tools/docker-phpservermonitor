@@ -4,7 +4,7 @@ set -e
 # Setup Database Connection
 if [ ${PSM_AUTO_CONFIGURE} = true ]; then
 
-# Setup / Create 
+# Setup / Create
 echo "Auto Configure / Create config.php"
 touch ${APACHE_DOCUMENT_ROOT}/config.php; \
 chmod 0777 ${APACHE_DOCUMENT_ROOT}/config.php
@@ -19,6 +19,10 @@ define('PSM_DB_NAME', '${MYSQL_DATABASE}');
 define('PSM_DB_PREFIX', '${MYSQL_DATABASE_PREFIX}');
 ?>
 EOF
+
+	if [ ${PSM_BASE_URL} != false ]; then
+	sed -i "s|?>|define('PSM_BASE_URL', '$PSM_BASE_URL');\n?>|1" ${APACHE_DOCUMENT_ROOT}/config.php
+	fi
 
 else
 # Setup Database Connection Defaults

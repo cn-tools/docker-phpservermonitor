@@ -2,9 +2,8 @@ FROM php:7.4-apache
 # MAINTAINER Austin St. Aubin <austinsaintaubin@gmail.com>
 
 # Build Environment Variables
-# ENV VERSION 3.5.2
-# ENV URL https://github.com/phpservermon/phpservermon/archive/v${VERSION}.tar.gz
-ENV URL https://github.com/phpservermon/phpservermon/archive/refs/heads/develop.zip
+ENV VERSION 3.5.2
+ENV URL https://github.com/phpservermon/phpservermon/archive/v${VERSION}.tar.gz
 
 # Install Base
 RUN apt-get update
@@ -58,11 +57,8 @@ VOLUME /sessions
 RUN set -ex; \
   cd /tmp; \
   rm -rf ${APACHE_DOCUMENT_ROOT}/*; \
-  curl --output phpservermonitor.zip --location $URL; \
-  unzip -d "${APACHE_DOCUMENT_ROOT}" "phpservermonitor.zip"; \
-  set -- "${APACHE_DOCUMENT_ROOT}"/*; \
-  mv "${APACHE_DOCUMENT_ROOT}"/*/* "${APACHE_DOCUMENT_ROOT}"/*/.[!.]* "${APACHE_DOCUMENT_ROOT}"; \
-  rmdir "$@"; \
+  curl --output phpservermonitor.tar.gz --location $URL; \
+  tar -xvf phpservermonitor.tar.gz --strip-components=1 -C ${APACHE_DOCUMENT_ROOT}/; \
   cd ${APACHE_DOCUMENT_ROOT}
 #   chown -R ${APACHE_RUN_USER}:www-data /var/www
 #   find /var/www -type d -exec chmod 750 {} \; ; \
@@ -74,8 +70,7 @@ RUN touch ${APACHE_DOCUMENT_ROOT}/config.php; \
     chmod 0777 ${APACHE_DOCUMENT_ROOT}/config.php
 
 # Composer install dependencies
-# RUN composer install --no-dev -o
-RUN php composer.phar install
+RUN composer install --no-dev -o
 
 # Add Entrypoint & Start Commands
 COPY docker-entrypoint.sh /usr/local/bin/

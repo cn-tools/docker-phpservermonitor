@@ -1,5 +1,8 @@
 
-# PHPServerMonitor in Docker (latest [development version](https://github.com/phpservermon/phpservermon/commits/develop))
+# PHPServerMonitor in Docker (Last version 3.5.2)
+
+### Last update : 2020/09/09 . Created repository with version 3.5.2
+#### Please open issues on [github](https://github.com/Quentinvarquet/docker-phpservermonitor/issues)
 
 ### PHPServerMonitor
 
@@ -32,7 +35,7 @@ cd phpservermonitor/
 
 # Build Docker Image
 docker build --no-cache \
-  --tag "phpservermonitor:dev" \
+  --tag "phpservermonitor:3.5.2" \
   --tag "phpservermonitor:latest" \
   --file Dockerfile .
 ```

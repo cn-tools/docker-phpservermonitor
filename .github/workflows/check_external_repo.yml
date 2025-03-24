@@ -9,6 +9,7 @@ jobs:
   check-repo-updates:
     runs-on: ubuntu-latest
     permissions:
+      actions: write
       contents: write
     env:
       STATE_FILE: ".github/last_commit_phpservermon_phpservermon_develop.txt" # Globally defined state file

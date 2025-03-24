@@ -62,11 +62,11 @@ jobs:
           git commit -m "Update last commit state file of root repo phpservermonitor"
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
 
-#      - name: Trigger Deployment Workflow
-#        if: success() # Executes the step only if the previous step was successful
-#        uses: benc-uk/workflow-dispatch@v1
-#        with:
-#          workflow: docker-publish.yml
-#          token: ${{ secrets.GITHUB_TOKEN }}
-#          repo: ${{ github.repository }}
-#          ref: master  # used branch
+      - name: Trigger Deployment Workflow
+        if: success() # Executes the step only if the previous step was successful
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: docker-publish.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repo: ${{ github.repository }}
+          ref: master  # used branch

@@ -1,10 +1,9 @@
-FROM php:7.4-apache
-# MAINTAINER Austin St. Aubin <austinsaintaubin@gmail.com>
+FROM php:8.4.5-apache
+# MAINTAINER CN-Tools <cn-tools@gmx.at> and Austin St. Aubin <austinsaintaubin@gmail.com>
 
 # Build Environment Variables
-# ENV VERSION 3.5.2
-# ENV URL https://github.com/phpservermon/phpservermon/archive/v${VERSION}.tar.gz
-ENV URL https://github.com/phpservermon/phpservermon/archive/refs/heads/develop.zip
+ENV VERSION develop
+ENV URL https://github.com/phpservermon/phpservermon/archive/refs/heads/${VERSION}.zip
 
 # Install Base
 RUN apt-get update

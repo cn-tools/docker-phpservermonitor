@@ -74,8 +74,7 @@ RUN touch ${APACHE_DOCUMENT_ROOT}/config.php; \
     chmod 0777 ${APACHE_DOCUMENT_ROOT}/config.php
 
 # Composer install dependencies
-# RUN composer install --no-dev -o
-RUN php composer.phar install
+RUN composer install --no-dev -o
 
 # Add Entrypoint & Start Commands
 COPY docker-entrypoint.sh /usr/local/bin/

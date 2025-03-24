@@ -39,7 +39,7 @@ jobs:
 
             if [ "$LATEST_COMMIT" == "$LAST_SAVED_COMMIT" ]; then
               echo "No new commits found. Exiting workflow."
-              exit 0
+              exit 78
             fi
           fi
 
@@ -57,7 +57,7 @@ jobs:
           # Check if there are changes to commit
           if git diff --cached --exit-code > /dev/null; then
             echo "No changes detected. Skipping commit and push."
-            exit 0
+            exit 78
           fi
 
           git commit -m "Update last commit state file of root repo phpservermonitor"

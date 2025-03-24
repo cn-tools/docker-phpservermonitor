@@ -1,0 +1,47 @@
+name: Check External Repo for Changes
+
+on:
+  schedule:
+    - cron: "0,30 * * * *" # Runs at 00 and 30 minutes past every hour
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  check-repo-updates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch latest commit from external repository
+        run: |
+          REPO_OWNER="phpservermon"
+          REPO_NAME="phpservermon"
+          BRANCH="develop"
+          TOKEN="${{ secrets.GITHUB_TOKEN }}"
+          STATE_FILE="last_commit_phpservermon.txt"
+
+          # Retrieve the latest commit from the external repository
+          LATEST_COMMIT=$(curl -s -H "Authorization: token $TOKEN" \
+            "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/commits/$BRANCH" | jq -r '.sha')
+
+          echo "Latest commit: $LATEST_COMMIT"
+
+          # Check if a previous commit ID is stored
+          if [ -f $STATE_FILE ]; then
+            LAST_SAVED_COMMIT=$(cat $STATE_FILE)
+            echo "Last stored commit: $LAST_SAVED_COMMIT"
+
+            if [ "$LATEST_COMMIT" == "$LAST_SAVED_COMMIT" ]; then
+              echo "No new commits found. Exiting workflow."
+              exit 0
+            fi
+          fi
+
+          # If a new commit is detected, save it
+          echo $LATEST_COMMIT > $STATE_FILE
+          echo "New commit detected! Triggering deployment."
+
+      - name: Trigger Deployment Workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: docker-publish.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repo: ${{ github.repository }}
+          ref: master  # used branch

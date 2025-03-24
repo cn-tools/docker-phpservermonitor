@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8.4.5-apache
 # MAINTAINER Austin St. Aubin <austinsaintaubin@gmail.com>
 
 # Build Environment Variables

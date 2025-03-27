@@ -1,8 +1,8 @@
 name: Check External Repo for Changes
 
 on:
-  schedule:
-    - cron: "0,30 * * * *" # Runs at 00 and 30 minutes past every hour
+#  schedule:
+#    - cron: "0,30 * * * *" # Runs at 00 and 30 minutes past every hour
   workflow_dispatch: # Allows manual triggering
 
 jobs:

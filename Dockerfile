@@ -1,4 +1,4 @@
-FROM php:8.5.2-apache
+FROM php:8.5.3RC1-apache
 # MAINTAINER CN-Tools <cn-tools@gmx.at> and Austin St. Aubin <austinsaintaubin@gmail.com>
 
 # Build Environment Variables
